@@ -4,27 +4,23 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'active_stripper/version'
 
 Gem::Specification.new do |spec|
+  spec.required_ruby_version = '~> 2.0'
+
   spec.name          = "active_stripper"
   spec.version       = ActiveStripper::VERSION
   spec.authors       = ["François TCHENG"]
   spec.email         = ["tcheng.f@gmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{Overwrite existing accessor to allow value preprocessing on setting}
+  spec.description   = %q{
+    Work with any Object in ruby, it helps dynamically generate setter to process the value.
+    For exemple, can lowercase an email field during attribute setting for ActiveRecord instances
+    instead of having to hook on validation hook.}
+  spec.homepage      = "https://github.com/nekogami/active_stripper"
   spec.license       = "MIT"
 
-  # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
-  # delete this section to allow pushing this gem to any host.
-  if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
-  else
-    raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
-  end
+  spec.files         = Dir["./lib/**/*.rb"]
 
-  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  spec.bindir        = "exe"
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.11"
