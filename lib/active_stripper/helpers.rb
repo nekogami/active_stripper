@@ -57,7 +57,7 @@ module ActiveStripper
       #
       # @return [String] Lowered case string
       #
-      def to_lower_stipper(val)
+      def to_lower_stripper(val)
         return val.downcase
       end
 
