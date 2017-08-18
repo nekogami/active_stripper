@@ -23,7 +23,7 @@ module ActiveStripper # Pun intended
       # Dynamically generate an anonymous module to be prepended
       mod = Module.new do
         args.each do | field |
-          return if !respond_to?(:"#{field}=")
+          next if !respond_to?(:"#{field}=")
 
           define_method :"#{field}=" do | val |
 
