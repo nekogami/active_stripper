@@ -7,6 +7,49 @@ module ActiveStripper # Pun intended
     base.extend(ClassMethods)
   end
 
+  #
+  # Iterate over `iterable_operators` and apply each of them on `val`
+  #
+  # @param [String] val String to manipulate
+  # @param [Hash/Array] iterable_operators Methods details to use on `val`
+  #
+  # @return [String] Modified String
+  #
+  def self.iterable_apply(val, iterable_operators)
+    iterable_operators.each do | operator_name, operator_args |
+
+      val = case
+            when !operator_args
+              ActiveStripper.method_apply(val, operator_name)
+            when operator_args[:module]
+              Module.const_get(operator_args[:module])
+                    .send(operator_name, val)
+            end
+    end
+
+    return val
+  end
+
+  #
+  # Look up for method `operator` in ActiveStripper::Helpers and current
+  # class and call it
+  #
+  # @param [String] val Value to modify
+  # @param [String/Symbol] operator Method name to execute
+  #
+  # @return [String] Modifies value
+  #
+  def self.method_apply(val, operator)
+    case
+    when ActiveStripper::Helpers.respond_to?(operator)
+      ActiveStripper::Helpers.send(operator, val)
+    when respond_to?(operator)
+      send(operator, val)
+    else
+      val
+    end
+  end
+
   module ClassMethods
 
     #
@@ -20,71 +63,28 @@ module ActiveStripper # Pun intended
       raise if args.count < 2
       operator = args.pop
 
+      args = args.reject { | field | self.respond_to?(field) }
+
       # Dynamically generate an anonymous module to be prepended
       mod = Module.new do
         args.each do | field |
-          next if !respond_to?(:"#{field}=")
 
           define_method :"#{field}=" do | val |
+            val = case operator.class.name
+                  when "Proc"
+                    operator.call(val)
+                  when "Hash", "Array"
+                    ActiveStripper.iterable_apply(val, operator)
+                  when "String", "Symbol"
+                    ActiveStripper.method_apply(val, operator)
+                  end
 
-            return  case operator.class
-                    when Proc
-                      operator.call(super(val))
-                    when Hash, Array
-                      iterable_apply(super(val), operator)
-                    when String, Symbol
-                      method_apply(super(val), operator)
-                    end
-
+            super(val)
           end
         end
       end
 
       prepend mod
     end
-
-    #
-    # Iterate over `iterable_operators` and apply each of them on `val`
-    #
-    # @param [String] val String to manipulate
-    # @param [Hash/Array] iterable_operators Methods details to use on `val`
-    #
-    # @return [String] Modified String
-    #
-    def iterable_apply(val, iterable_operators)
-      iterable_operators.each do | operator_name, operator_args |
-
-        val = case
-              when !operator_args
-                method_apply(val, operator_name)
-              when operator_args[:module]
-                Module.const_get(operator_args[:module])
-                      .send(operator_name, val)
-              end
-      end
-
-      return val
-    end
-
-    #
-    # Look up for method `operator` in ActiveStripper::Helpers and current
-    # class and call it
-    #
-    # @param [String] val Value to modify
-    # @param [String/Symbol] operator Method name to execute
-    #
-    # @return [String] Modifies value
-    #
-    def method_apply(val, operator)
-      case
-      when ActiveStripper::Helpers.respond_to?(operator)
-        ActiveStripper::Helpers.send(operator, val)
-      when respond_to?(operator)
-        send(operator, val)
-      else
-        val
-      end
-    end
-
   end
 end
