@@ -11,11 +11,12 @@ Gem::Specification.new do |spec|
   spec.authors       = ["François TCHENG"]
   spec.email         = ["tcheng.f@gmail.com"]
 
-  spec.summary       = %q{Overwrite existing accessor to allow value preprocessing on setting}
+  spec.summary       = %q{Strip or preprocess Active Record / Object attributes with prepended setter}
   spec.description   = %q{
-    Work with any Object in ruby, it helps dynamically generate setter to process the value.
+    Strip or preprocess Active Record / Object attributes by creating custom setter through module prepending.
+    Work with any Object in ruby and still allow custom setter to be defined inside the class.
     For exemple, can lowercase an email field during attribute setting for ActiveRecord instances
-    instead of having to hook on validation hook.}
+    instead of having to hook on validation hook on ActiveRecord.}
   spec.homepage      = "https://github.com/nekogami/active_stripper"
   spec.license       = "MIT"
 

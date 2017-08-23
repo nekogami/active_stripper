@@ -12,6 +12,8 @@ It defines setter methods but you can still use your owns in the class definitio
 
 ## STATUS
 [![Build Status](https://travis-ci.org/nekogami/active_stripper.svg?branch=master)](https://travis-ci.org/nekogami/active_stripper)
+[![Gem Version](https://badge.fury.io/rb/active_stripper.svg)](https://badge.fury.io/rb/active_stripper)
+
 
 ## Install
 The gem is not pushed on rubygem.org since the tests are not written yet so for now
