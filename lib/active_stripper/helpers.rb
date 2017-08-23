@@ -1,3 +1,5 @@
+# Any helper processor in this module need to have their first argument set to contain
+# to value to be processed
 module ActiveStripper
   module Helpers
     class << self
@@ -62,6 +64,17 @@ module ActiveStripper
         return val.downcase
       end
 
+      #
+      # Set value to nil if val is an empty string
+      #
+      # @param [String] val String to evaluate
+      #
+      # @return [String/Nil] Return @val if not empty otherwise return nil
+      #
+      def empty_string_to_nil(val)
+        return if !val || val == ""
+        return val
+      end
     end
   end
 end
