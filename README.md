@@ -1,6 +1,6 @@
 # active_stripper
 
-Small gem that allow preprocessing of field (remove emoji, strip...) by creating prepended custom setters.
+Small gem that allows pre processing of attributes (downcase, strip...) by creating prepended custom setters.
 
 This allows preprocessing of attributes before a custom accessor declared inside the class body is called
 
@@ -12,14 +12,17 @@ It defines setter methods but you can still use your owns in the class definitio
 
 ## STATUS
 [![Build Status](https://travis-ci.org/nekogami/active_stripper.svg?branch=master)](https://travis-ci.org/nekogami/active_stripper)
-[![Gem Version](https://badge.fury.io/rb/active_stripper.svg)](https://badge.fury.io/rb/active_stripper)
+[![Gem version](https://img.shields.io/gem/v/active_stripper.svg?style=flat)](http://rubygems.org/gems/active_stripper "View this project in Rubygems")
 
 
 ## Install
-The gem is not pushed on rubygem.org since the tests are not written yet so for now
 
-In your gemfile
-```gem 'active_stripper', github: "nekogami/active_stripper"```
+### Bundler
+In your gemfile add
+`gem 'active_stripper', '~> 0.2.0'`
+
+### Without Bundler
+`gem install 'active_stripper'`
 
 ## Helpers listing
 
@@ -81,4 +84,38 @@ foo.text_field = "   HeLLo WhitespacEEEs          \t"
 foo.text_field => "hello whitespaceees in class definition custom overwrite"
 
 # Advantage here is that the processed value is visible without executing a hook like before_validation etc etc
+```
+
+### Vanilla Ruby
+
+```ruby
+class Foo
+  include ActiveStripper
+
+  attr_accessor :text_field
+
+  strip_value_from :text_field, :white_space_stripper
+
+  def text_field=(val)
+    @text_field = val + " in class definition custom overwrite   "
+  end
+end
+
+foo = Foo.new
+foo.text_field = "   HeLLo WhitespacEEEs          \t"
+foo.text_field => "hello whitespaceees in class definition custom overwrite   "
+
+class Bar < Foo
+  strip_value_from :text_field, :white_space_stripper
+
+  def text_field=(val)
+    super(val + " child class definition custom overwrite   ")
+  end
+end
+
+bar = Bar.new
+bar.text_field = "   HeLLo WhitespacEEEs          \t"
+bar.text_field # => "hello whitespaceees child class definition custom overwrite in class definition custom overwrite   "
+# Note that the most ancient definition is never processed
+
 ```
