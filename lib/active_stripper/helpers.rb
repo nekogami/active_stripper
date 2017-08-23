@@ -11,7 +11,6 @@ module ActiveStripper
       #
       def white_space_stripper(val)
         return if !val
-
         return val.strip
       end
 
@@ -24,7 +23,6 @@ module ActiveStripper
       #
       def multiple_space_stripper(val)
         return if !val
-
         return val.gsub(/\s+/, " ")
       end
 
@@ -36,6 +34,7 @@ module ActiveStripper
       # @return [String] Cleaned up string
       #
       def end_space_stripper(val)
+        return if !val
         return val.gsub(/\s+$/, "")
       end
 
@@ -47,6 +46,7 @@ module ActiveStripper
       # @return [String] Cleaned up string
       #
       def start_space_stripper(val)
+        return if !val
         return val.gsub(/^\s+/, "")
       end
 
@@ -58,6 +58,7 @@ module ActiveStripper
       # @return [String] Lowered case string
       #
       def to_lower_stripper(val)
+        return if !val
         return val.downcase
       end
 

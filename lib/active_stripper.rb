@@ -43,6 +43,8 @@ module ActiveStripper # Pun intended
   #
   def self.method_apply(val, operator, base)
     case
+    when operator.class.name === "Proc"
+      operator.call(val)
     when ActiveStripper::Helpers.respond_to?(operator)
       ActiveStripper::Helpers.send(operator, val)
     when base.respond_to?(operator)

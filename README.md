@@ -5,7 +5,7 @@ This allows preprocessing of attributes before a custom accessor declared inside
 
 Only works on ruby 2.x since the prepend instruction is used.
 
-Named active_stripper for search purposes (that and because I <3 pun) but doesn't depend on active record method and can be used any attr_accessor in any class.
+Named active_stripper for search purposes (that and because I <3 pun) but doesn't have any dependencies (ActiveSupport or otherwise) and can be used any attr_accessor in any class.
 
 It defines setter methods but you can still use your owns in the class definition, the one generated from the gem will be called last though.
 
@@ -35,6 +35,7 @@ strip_value_from : field1, field2, field3, :processor_method
 
 ```ruby
 # Will apply all processor method in the declaration order on all listed fields
+# The processors are executed in the same order as defined in the array (left to right)
 strip_value_from : field1, field2, field3, [:processor_method, :processor_method2]
 ```
 
@@ -42,10 +43,14 @@ strip_value_from : field1, field2, field3, [:processor_method, :processor_method
 # Will lookup processor_method in the module ModuleName, for application on all fields
 # processor_method2 is looked up in ActiveStripper::Helpers first and
 # then in the current object if not found
-#
 strip_value_from : field1, field2, field3, { processor_method: { module: :ModuleName }, processor_method2: nil }
 ```
 
+```ruby
+# The processor here are executed in the inverse order of declaration (bottom to top)
+strip_value_from : field1, :processor_method2
+strip_value_from : field1, :processor_method
+```
 
 ### Active record
 ```ruby
@@ -71,4 +76,3 @@ foo.text_field => "hello whitespaceees in class definition custom overwrite"
 
 # Advantage here is that the processed value is visible without executing a hook like before_validation etc etc
 ```
-
