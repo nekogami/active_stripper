@@ -114,6 +114,16 @@ describe ActiveStripper do
           it { expect(foo.test_accessor).to eql Integer(TEST_STRING_INT) }
         end
 
+        context "Setting test_accessor to an empty string" do
+          before { foo.test_accessor = "" }
+          it { expect(foo.test_accessor).to eql 0 }
+        end
+
+        context "Setting test_accessor to nil" do
+          before { foo.test_accessor = nil }
+          it { expect(foo.test_accessor).to eql 0 }
+        end
+
         context "Setting a string not representing an valid Integer like `4242NOPE`" do
           it { expect { foo.test_accessor = "4242NOPE" }.to raise_error(ArgumentError) }
         end
@@ -134,6 +144,16 @@ describe ActiveStripper do
 
         context "#test_accessor" do
           it { expect(foo.test_accessor).to eql Float(TEST_STRING_FLOAT) }
+        end
+
+        context "Setting test_accessor to an empty string" do
+          before { foo.test_accessor = "" }
+          it { expect(foo.test_accessor).to eql 0.0 }
+        end
+
+        context "Setting test_accessor to nil" do
+          before { foo.test_accessor = nil }
+          it { expect(foo.test_accessor).to eql 0.0 }
         end
 
         context "Setting a string not representing an valid Float like `42.42NOPE`" do
