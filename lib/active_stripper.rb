@@ -1,3 +1,5 @@
+#coding: utf-8
+
 require "active_stripper/version"
 require "active_stripper/helpers"
 

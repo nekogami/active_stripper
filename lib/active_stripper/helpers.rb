@@ -1,3 +1,5 @@
+#coding: utf-8
+
 # Any helper processor in this module need to have their first argument set to contain
 # to value to be processed
 module ActiveStripper
@@ -75,6 +77,37 @@ module ActiveStripper
         return if !val || val == ""
         return val
       end
+
+      #
+      # Convert value to Integer value if format match.
+      # nil and empty string returns 0 other value are converted with
+      # Integer(val) command if value is not convertible raise an argument Error
+      # Only to use if val is NOT a BigDecimal or should results in one
+      #
+      # @param [Any] val Value to cast into integer
+      #
+      # @return [Integer] Casted value
+      #
+      def cast_to_int(val)
+        return 0 if !val || val == ""
+        return Integer(val)
+      end
+
+      #
+      # Convert value to Float value if format match.
+      # nil and empty string returns 0.0 other value are converted with
+      # Float(val) command if value is not convertible raise an argument Error
+      # Only to use if val is NOT a BigDecimal or should results in one
+      #
+      # @param [Any] val Value to cast into float
+      #
+      # @return [Float] Casted value
+      #
+      def cast_to_float(val)
+        return 0.0 if !val || val == ""
+        return Float( (val.is_a?(String)) ? val.gsub(",", ".") : val )
+      end
+
     end
   end
 end
