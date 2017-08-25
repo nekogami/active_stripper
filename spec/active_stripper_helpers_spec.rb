@@ -28,7 +28,7 @@ describe ActiveStripper::Helpers do
   end
 
   describe "#empty_string_to_nil('    Test  String  ')" do
-    it { expect(ActiveStripper::Helpers.empty_string_to_nil('')).to be_nil }
+    it { expect(ActiveStripper::Helpers.empty_string_to_nil("    Test  String  ")).to eql "    Test  String  " }
   end
 
   describe "#cast_to_int('')" do
