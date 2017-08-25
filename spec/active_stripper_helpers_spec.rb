@@ -31,4 +31,40 @@ describe ActiveStripper::Helpers do
     it { expect(ActiveStripper::Helpers.empty_string_to_nil('')).to be_nil }
   end
 
+  describe "#cast_to_int('')" do
+    it { expect(ActiveStripper::Helpers.cast_to_int('')).to eql 0 }
+  end
+
+  describe "#cast_to_int(nil)" do
+    it { expect(ActiveStripper::Helpers.cast_to_int(nil)).to eql 0 }
+  end
+
+  describe "#cast_to_int('4242')" do
+    it { expect(ActiveStripper::Helpers.cast_to_int('4242')).to eql 4242 }
+  end
+
+  describe "#cast_to_int('4242NOPE')" do
+    it { expect { ActiveStripper::Helpers.cast_to_int('4242NOPE') }.to raise_error(ArgumentError) }
+  end
+
+  describe "#cast_to_float('')" do
+    it { expect(ActiveStripper::Helpers.cast_to_float('')).to eql 0.0 }
+  end
+
+  describe "#cast_to_float(nil)" do
+    it { expect(ActiveStripper::Helpers.cast_to_float(nil)).to eql 0.0 }
+  end
+
+  describe "#cast_to_float('42.42')" do
+    it { expect(ActiveStripper::Helpers.cast_to_float('42.42')).to eql 42.42 }
+  end
+
+  describe "#cast_to_float('42,42')" do
+    it { expect(ActiveStripper::Helpers.cast_to_float('42,42')).to eql 42.42 }
+  end
+
+  describe "#cast_to_float('42.42NOPE')" do
+    it { expect { ActiveStripper::Helpers.cast_to_float('42.42NOPE') }.to raise_error(ArgumentError) }
+  end
+
 end
