@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Strip or preprocess Active Record / Object attributes with prepended setter}
   spec.description   = %q{
-    Strip or preprocess Active Record / Object attributes by creating custom setter through module prepending.
+    Strip / preprocess selected Active Record / Object attributes by creating custom setter through module prepending.
     Work with any Object in ruby and still allow custom setter to be defined inside the class.
     For exemple, can lowercase an email field during attribute setting for ActiveRecord instances
     instead of having to hook on validation hook on ActiveRecord.}
