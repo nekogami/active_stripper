@@ -43,7 +43,7 @@ describe ActiveStripper do
       end
     end
 
-    context "#strip_value_from(:test_accessor, processor: { module: :TestModule }) execution make it so that" do
+    context "#strip_value_from(:test_accessor, processor: { module: :CustomModule }) execution make it so that" do
       before do
         stub_const("CustomModule", Module.new)
         CustomModule.module_eval do
@@ -61,6 +61,42 @@ describe ActiveStripper do
         it { expect(foo.test_accessor).to eql CustomModule.processor(TEST_STRING) }
       end
     end
+
+    context "#strip_value_from(:test_accessor, processor: { module: :CustomModule, additionnal_args: [:extra_foo, :extra_bar] }) execution make it so that" do
+      before do
+        stub_const("CustomModule", Module.new)
+        CustomModule.module_eval do
+          def self.processor(val, arg1, arg2)
+            return val.to_s + " curstom processor executed #{arg1} #{arg2}"
+          end
+        end
+
+        Bar.class_eval do
+          strip_value_from(:test_accessor, processor: { module: :CustomModule, additionnal_args: [:extra_foo, :extra_bar] } )
+        end
+      end
+
+      context "#test_accessor" do
+        it { expect(foo.test_accessor).to eql CustomModule.processor(TEST_STRING, :extra_foo, :extra_bar) }
+      end
+    end
+
+    context "#strip_value_from(:test_accessor, processor: { module: '', additionnal_args: [:extra_foo, :extra_bar] }) execution make it so that" do
+      before do
+        Bar.class_eval do
+          strip_value_from(:test_accessor, processor: { module: "", additionnal_args: [:extra_foo, :extra_bar] } )
+
+          def processor(val, arg1, arg2)
+            return val.to_s + " curstom processor executed #{arg1} #{arg2}"
+          end
+        end
+      end
+
+      context "#test_accessor" do
+        it { expect(foo.test_accessor).to eql foo.processor(TEST_STRING, :extra_foo, :extra_bar) }
+      end
+    end
+
 
     context "#strip_value_from(:test_accessor, -> (val) { val + ' lambda processor' }) execution make it so that" do
       let(:lambda_method) { -> (val) { val + ' lambda processor' } }
