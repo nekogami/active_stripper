@@ -10,6 +10,10 @@ Named active_stripper for search purposes (that and because I <3 pun) but doesn'
 
 It defines setter methods but you can still use your owns in the class definition, the one generated from the gem will be called last though.
 
+## Conduct and Contribution
+Please review our [CODE OF CONDUCT](https://github.com/nekogami/active_stripper/blob/master/CODE_OF_CONDUCT.md) AND
+[CONTRIBUTION](https://github.com/nekogami/active_stripper/blob/master/CONTRIBUTING.md) rules (only takes a few seconds to read) before any request.
+
 ## STATUS
 [![Build Status](https://travis-ci.org/nekogami/active_stripper.svg?branch=master)](https://travis-ci.org/nekogami/active_stripper)
 [![Gem version](https://img.shields.io/gem/v/active_stripper.svg?style=flat)](http://rubygems.org/gems/active_stripper "View this project in Rubygems")
