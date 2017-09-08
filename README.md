@@ -60,6 +60,18 @@ strip_value_from : field1, field2, field3, { processor_method: { module: :Module
 ```
 
 ```ruby
+# Will lookup processor_method in the module ModuleName, for application on all fields
+# and splat the content of additionnal_args as argument to processor_method
+strip_value_from : field1, field2, field3, { processor_method: { module: :ModuleName }, additionnal_args: [1] }
+```
+
+
+```ruby
+# Will lookup processor_method ONLY in the included object, for application on all fields
+strip_value_from : field1, field2, field3, { processor_method: { module: "" } }
+```
+
+```ruby
 # The processor here are executed in the inverse order of declaration (bottom to top)
 strip_value_from : field1, :processor_method2
 strip_value_from : field1, :processor_method
