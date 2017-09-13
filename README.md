@@ -17,7 +17,8 @@ Please review our [CODE OF CONDUCT](https://github.com/nekogami/active_stripper/
 ## STATUS
 [![Build Status](https://travis-ci.org/nekogami/active_stripper.svg?branch=master)](https://travis-ci.org/nekogami/active_stripper)
 [![Gem version](https://img.shields.io/gem/v/active_stripper.svg?style=flat)](http://rubygems.org/gems/active_stripper "View this project in Rubygems")
-
+[![Code Climate](https://codeclimate.com/github/nekogami/active_stripper/badges/gpa.svg)](https://codeclimate.com/github/nekogami/active_stripper)
+[![Test Coverage](https://codeclimate.com/github/nekogami/active_stripper/badges/coverage.svg)](https://codeclimate.com/github/nekogami/active_stripper/coverage)
 
 ## Install
 
