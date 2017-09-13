@@ -105,7 +105,7 @@ module ActiveStripper
       #
       def cast_to_float(val)
         return 0.0 if !val || val == ""
-        return Float( (val.is_a?(String)) ? val.gsub(",", ".") : val )
+        return Float( (val.is_a?(String)) ? val.tr(",", ".") : val )
       end
 
     end
