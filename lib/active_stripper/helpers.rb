@@ -67,6 +67,32 @@ module ActiveStripper
       end
 
       #
+      # Execute String#tr on `val`, find `pattern` and replace with `replacements`
+      #
+      # @param [String] val String to clean up
+      # @param [String] pattern First parameters to method String#tr
+      # @param [String] replacements Second parameters to method String#tr
+      #
+      # @return [String] Cleaned up string
+      #
+      def replace_stripper(val, pattern, replacements)
+        return val.tr(pattern, replacements)
+      end
+
+      #
+      # Execute String#gsub on `val`, find `pattern` and replace with `replacement`
+      #
+      # @param [String] val String to clean up
+      # @param [String] pattern First parameters to method String#gsub
+      # @param [String] replacement Second parameters to method String#gsub
+      #
+      # @return [String] Cleaned up string
+      #
+      def substitute_stripper(val, pattern, replacement)
+        return val.gsub(pattern, replacement)
+      end
+
+      #
       # Set value to nil if val is an empty string
       #
       # @param [String] val String to evaluate
