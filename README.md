@@ -4,7 +4,7 @@ Small gem that allows pre processing of attributes (downcase, strip...) by creat
 
 This allows preprocessing of attributes before a custom accessor declared inside the class body is called
 
-Only works on ruby 2.x since the prepend instruction is used.
+Only works on ruby version >= 2.x since the prepend instruction is used.
 
 Named active_stripper for search purposes (that and because I <3 pun) but doesn't have any dependencies (ActiveSupport or otherwise) and can be used any attr_accessor in any class.
 
@@ -24,7 +24,7 @@ Please review our [CODE OF CONDUCT](https://github.com/nekogami/active_stripper/
 
 ### Bundler
 In your gemfile add
-`gem 'active_stripper', '~> 0.2.0'`
+`gem 'active_stripper'`
 
 ### Without Bundler
 `gem install 'active_stripper'`
@@ -44,38 +44,38 @@ After the call to include, you can use the gem in the following ways
 # will look up the method #processor_method in ActiveStripper::Helpers
 # if inexistent, will look up in the current object for it
 # then apply it on all listed fields
-strip_value_from : field1, field2, field3, :processor_method
+strip_value_from :field1, :field2, :field3, :processor_method
 ```
 
 ```ruby
 # Will apply all processor method in the declaration order on all listed fields
 # The processors are executed in the same order as defined in the array (left to right)
-strip_value_from : field1, field2, field3, [:processor_method, :processor_method2]
+strip_value_from :field1, :field2, :field3, [:processor_method, :processor_method2]
 ```
 
 ```ruby
 # Will lookup processor_method in the module ModuleName, for application on all fields
 # processor_method2 is looked up in ActiveStripper::Helpers first and
 # then in the current object if not found
-strip_value_from : field1, field2, field3, { processor_method: { module: :ModuleName }, processor_method2: nil }
+strip_value_from :field1, :field2, :field3, { processor_method: { module: :ModuleName }, processor_method2: nil }
 ```
 
 ```ruby
 # Will lookup processor_method in the module ModuleName, for application on all fields
 # and splat the content of additionnal_args as argument to processor_method
-strip_value_from : field1, field2, field3, { processor_method: { module: :ModuleName }, additionnal_args: [1] }
+strip_value_from :field1, :field2, :field3, { processor_method: { module: :ModuleName }, additionnal_args: [1] }
 ```
 
 
 ```ruby
 # Will lookup processor_method ONLY in the included object, for application on all fields
-strip_value_from : field1, field2, field3, { processor_method: { module: "" } }
+strip_value_from :field1, :field2, :field3, { processor_method: { module: "" } }
 ```
 
 ```ruby
 # The processor here are executed in the inverse order of declaration (bottom to top)
-strip_value_from : field1, :processor_method2
-strip_value_from : field1, :processor_method
+strip_value_from :field1, :processor_method2
+strip_value_from :field1, :processor_method
 ```
 
 ### Active record
