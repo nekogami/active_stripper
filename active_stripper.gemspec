@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'active_stripper/version'
 
 Gem::Specification.new do |spec|
-  spec.required_ruby_version = '~> 2.0'
+  spec.required_ruby_version = '>= 2.0'
 
   spec.name          = "active_stripper"
   spec.version       = ActiveStripper::VERSION
@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
 
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.11"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency "bundler", ">= 1.11"
+  spec.add_development_dependency "rake", ">= 10.0"
+  spec.add_development_dependency "rspec", ">= 3.0"
 end
